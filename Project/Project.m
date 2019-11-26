@@ -53,6 +53,13 @@ for i = 1:height(report)
         arr(filter, 8) = 1;
     end
     
+    if strcmp(report{i,2}, 'Meeting')
+        from = datenum(report{i,4});
+        to = datenum(report{i,5});
+        filter = (arr(:, 1) <= to & arr(:, 1) >= from);
+        arr(filter, 8) = 3;
+    end
+    
     if strcmp(report{i,2}, 'In computer')
         from = datenum(report{i,4});
         to = datenum(report{i,5});
@@ -60,6 +67,26 @@ for i = 1:height(report)
         arr(filter, 8) = 3;
     end
     
+    if strcmp(report{i,2}, 'In vehicle')
+        from = datenum(report{i,4});
+        to = datenum(report{i,5});
+        filter = (arr(:, 1) <= to & arr(:, 1) >= from);
+        arr(filter, 8) = 5;
+    end
+    
+    if strcmp(report{i,2}, 'In bus')
+        from = datenum(report{i,4});
+        to = datenum(report{i,5});
+        filter = (arr(:, 1) <= to & arr(:, 1) >= from);
+        arr(filter, 8) = 5;
+    end
+    
+    if strcmp(report{i,2}, 'Train')
+        from = datenum(report{i,4});
+        to = datenum(report{i,5});
+        filter = (arr(:, 1) <= to & arr(:, 1) >= from);
+        arr(filter, 8) = 5;
+    end
     
 end
 
@@ -67,6 +94,7 @@ figure(1)
 x = 1:length(arr);
 hold on
 scatter(x(arr(:, 8) == 4), arr(arr(:, 8) == 4, 9), 'black', '.')
+scatter(x(arr(:, 8) == 5), arr(arr(:, 8) == 5, 9), 'yellow', '.')
 scatter(x(arr(:, 8) == 3), arr(arr(:, 8) == 3, 9), 'green', '.')
 scatter(x(arr(:, 8) == 2), arr(arr(:, 8) == 2, 9), 'red', '.')
 scatter(x(arr(:, 8) == 1), arr(arr(:, 8) == 1, 9), 'blue', '.')
