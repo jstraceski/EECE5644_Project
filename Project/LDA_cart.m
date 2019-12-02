@@ -89,7 +89,7 @@ boundary_line = fimplicit(disc_bound_graph, [min(X(:,1)) max(X(:,1)) min(X(:,2))
 
 gscatter(X((A==FLDA_training_predicted_vals),1),...
     X((A==FLDA_training_predicted_vals),2),...
-    A(A==FLDA_training_predicted_vals),'rc', '..');
+    A(A==FLDA_training_predicted_vals),'rb', '.X');
 
 scatter(X((A~=FLDA_training_predicted_vals),1),...
     X((A~=FLDA_training_predicted_vals),2), 'k.');
@@ -134,5 +134,29 @@ y2_w_pdf = mvnpdf(y_w', y2_w_mu, y2_w_sig);
 
 hold on
 plot(y_w, y1_w_pdf, 'r-');
-plot(y_w, y2_w_pdf, 'c-');
+plot(y_w, y2_w_pdf, 'b-');
 legend('Meeting/Computer', 'Walking');
+
+%-------------------------TEST DATA-----------------------------%
+
+figure()
+title("Test Data Fisher's LDA");
+hold on
+boundary_line = fimplicit(disc_bound_graph,...
+    [min(test_X(:,1)) max(test_X(:,1)) min(test_X(:,2)) max(test_X(:,2))]);
+
+gscatter(test_X((test_A==FLDA_test_predicted_vals),1),...
+    test_X((test_A==FLDA_test_predicted_vals),2),...
+    test_A(test_A==FLDA_test_predicted_vals),'rc', '..');
+
+scatter(test_X((test_A~=FLDA_test_predicted_vals),1),...
+    test_X((test_A~=FLDA_test_predicted_vals),2), 'k.');
+
+plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
+plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
+legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+    'Meeting/Computer Centroid', 'Walking Centroid');
+hold off
+legend('show')
+xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
+ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');

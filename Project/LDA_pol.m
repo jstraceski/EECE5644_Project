@@ -89,7 +89,7 @@ test_err = (test_cm(1,2)+ test_cm(2,1)) / sum(sum(test_cm))
 %-------------------------LDA Graph-------------------------%
 
 figure()
-title("Fisher's LDA");
+title("Fisher's LDA with Polar Converted Values");
 hold on
 boundary_line = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
 % gscatter(X_pol(:,1), X_pol(:,2), A_pol,'rc', '..');
@@ -111,7 +111,7 @@ xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
 ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');
 
 figure()
-title("Fisher's LDA Predicted");
+title("Fisher's LDA Predicted with Polar Converted Values");
 hold on
 boundary_line_2 = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
 gscatter(X_pol(:,1), X_pol(:,2), FLDA_training_predicted_vals,'rc', '..');
