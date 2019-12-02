@@ -112,24 +112,34 @@ figure()
 title("Fisher's LDA");
 hold on
 boundary_line = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
-gscatter(X_pol(:,1), X_pol(:,2), A_pol,'bg', '..');
+%gscatter(X_pol(:,1), X_pol(:,2), A_pol,'rc', '..');
 
-plot(Mu1(1), Mu1(2), 'r+', 'MarkerSize', 10);
-plot(Mu2(1), Mu2(2), 'k+', 'MarkerSize', 10);
+gscatter(X_pol((A_pol==FLDA_training_predicted_vals),1),...
+    X_pol((A_pol==FLDA_training_predicted_vals),2),...
+    A_pol(A_pol==FLDA_training_predicted_vals),'rc', '..');
+
+scatter(X_pol((A_pol~=FLDA_training_predicted_vals),1),...
+    X_pol((A_pol~=FLDA_training_predicted_vals),2), 'k.');
+
+plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
+plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
+legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+    'Meeting/Computer Centroid', 'Walking Centroid');
 hold off
 legend('show')
-%ylabel('accel');
-%xlabel('gps');
+xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
+ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');
 
 figure()
 title("Fisher's LDA Predicted");
 hold on
 boundary_line_2 = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
-gscatter(X_pol(:,1), X_pol(:,2), FLDA_training_predicted_vals,'rk', 'xo');
+gscatter(X_pol(:,1), X_pol(:,2), FLDA_training_predicted_vals,'rc', '..');
+legend('Decision Boundary','Meeting/Computer', 'Walking');
 hold off
 legend('show')
-%ylabel(y_axis);
-%xlabel(x_axis);
+xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
+ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');
 
 %-------------------------Projection Graph-------------------------%
 
@@ -151,6 +161,6 @@ y1_w_pdf = mvnpdf(y_w', y1_w_mu, y1_w_sig);
 y2_w_pdf = mvnpdf(y_w', y2_w_mu, y2_w_sig);
 
 hold on
-plot(y_w, y1_w_pdf, 'r-');
-plot(y_w, y2_w_pdf, 'b-');
-legend('Class 1', 'Class 2');
+plot(y_w, y1_w_pdf, 'c-');
+plot(y_w, y2_w_pdf, 'r-');
+legend('Meeting/Computer', 'Walking');

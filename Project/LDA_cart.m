@@ -85,24 +85,33 @@ figure()
 title("Fisher's LDA");
 hold on
 boundary_line = fimplicit(disc_bound_graph, [min(X(:,1)) max(X(:,1)) min(X(:,2)) max(X(:,2))]);
-gscatter(X(:,1), X(:,2), A,'bg', '..');
+%gscatter(X(:,1), X(:,2), A,'rc', '..');
 
-plot(Mu1(1), Mu1(2), 'r+', 'MarkerSize', 10);
-plot(Mu2(1), Mu2(2), 'k+', 'MarkerSize', 10);
+gscatter(X((A==FLDA_training_predicted_vals),1),...
+    X((A==FLDA_training_predicted_vals),2),...
+    A(A==FLDA_training_predicted_vals),'rc', '..');
+
+scatter(X((A~=FLDA_training_predicted_vals),1),...
+    X((A~=FLDA_training_predicted_vals),2), 'k.');
+
+plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
+plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
+legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+    'Meeting/Computer Centroid', 'Walking Centroid');
 hold off
 legend('show')
-%ylabel('accel');
-%xlabel('gps');
+xlabel('Acceleration-Z');
+ylabel('Gyroscope-X');
 
 figure()
 title("Fisher's LDA Predicted");
 hold on
 boundary_line_2 = fimplicit(disc_bound_graph, [min(X(:,1)) max(X(:,1)) min(X(:,2)) max(X(:,2))]);
-gscatter(X(:,1), X(:,2), FLDA_training_predicted_vals,'rk', 'xo');
+gscatter(X(:,1), X(:,2), FLDA_training_predicted_vals,'rc', '..');
 hold off
 legend('show')
-%ylabel(y_axis);
-%xlabel(x_axis);
+xlabel('Acceleration-Z');
+ylabel('Gyroscope-X');
 
 %-------------------------Projection Graph-------------------------%
 
@@ -125,5 +134,5 @@ y2_w_pdf = mvnpdf(y_w', y2_w_mu, y2_w_sig);
 
 hold on
 plot(y_w, y1_w_pdf, 'r-');
-plot(y_w, y2_w_pdf, 'b-');
-legend('Class 1', 'Class 2');
+plot(y_w, y2_w_pdf, 'c-');
+legend('Meeting/Computer', 'Walking');
