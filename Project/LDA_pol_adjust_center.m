@@ -109,37 +109,41 @@ test_err = (test_cm(1,2)+ test_cm(2,1)) / sum(sum(test_cm))
 %-------------------------LDA Graph-------------------------%
 
 figure()
-title("Fisher's LDA with Polar Converted Values Adjusted for Averaged Class Centroids");
+set(gcf,'color','w');
+title("Fisher's LDA with Polar-Adjusted Values");
 hold on
 boundary_line = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
 %gscatter(X_pol(:,1), X_pol(:,2), A_pol,'rc', '..');
 
-gscatter(X_pol((A_pol==FLDA_training_predicted_vals),1),...
-    X_pol((A_pol==FLDA_training_predicted_vals),2),...
-    A_pol(A_pol==FLDA_training_predicted_vals),'rc', '..');
+gscatter(X_pol(:,1),...
+    X_pol(:,2),...
+    FLDA_training_predicted_vals,'rb', '.x');
 
 scatter(X_pol((A_pol~=FLDA_training_predicted_vals),1),...
-    X_pol((A_pol~=FLDA_training_predicted_vals),2), 'k.');
+    X_pol((A_pol~=FLDA_training_predicted_vals),2), 20, 'ko');
 
 plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
 plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
-legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+lgd = legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
     'Meeting/Computer Centroid', 'Walking Centroid');
+set(lgd,'FontSize',10);
 hold off
 legend('show')
 xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
 ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');
 
+%{
 figure()
 title("Fisher's LDA Predicted with Polar Converted Values Adjusted for Averaged Class Centroids");
 hold on
 boundary_line_2 = fimplicit(disc_bound_graph, [min(X_pol(:,1)) max(X_pol(:,1)) min(X_pol(:,2)) max(X_pol(:,2))]);
-gscatter(X_pol(:,1), X_pol(:,2), FLDA_training_predicted_vals,'rc', '..');
+gscatter(X_pol(:,1), X_pol(:,2), FLDA_training_predicted_vals,'rb', '..');
 legend('Decision Boundary','Meeting/Computer', 'Walking');
 hold off
 legend('show')
 xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
 ylabel('Theta for Acceleration(Z)/Gyroscopic(X) points');
+%}
 
 %-------------------------Projection Graph-------------------------%
 
@@ -170,22 +174,24 @@ legend('Meeting/Computer', 'Walking');
 test_A_pol = testing_dat(:,3);
 
 figure()
+set(gcf,'color','w');
 title("Test Data Fisher's LDA with Polar-Adjusted Values");
 hold on
 boundary_line = fimplicit(disc_bound_graph,...
     [min(test_X_pol(:,1)) max(test_X_pol(:,1)) min(test_X_pol(:,2)) max(test_X_pol(:,2))]);
 
-gscatter(test_X_pol((test_A_pol==FLDA_test_predicted_vals),1),...
-    test_X_pol((test_A_pol==FLDA_test_predicted_vals),2),...
-    test_A_pol(test_A_pol==FLDA_test_predicted_vals),'rc', '..');
+gscatter(test_X_pol(:,1),...
+    test_X_pol(:,2),...
+    FLDA_test_predicted_vals,'rb', '.x', [5 5]);
 
 scatter(test_X_pol((test_A_pol~=FLDA_test_predicted_vals),1),...
-    test_X_pol((test_A_pol~=FLDA_test_predicted_vals),2), 'k.');
+    test_X_pol((test_A_pol~=FLDA_test_predicted_vals),2), 20, 'ko');
 
 plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
 plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
-legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+lgd_2 = legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
     'Meeting/Computer Centroid', 'Walking Centroid');
+set(lgd_2,'FontSize',10);
 hold off
 legend('show')
 xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');

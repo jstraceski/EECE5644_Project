@@ -82,27 +82,30 @@ test_err = (test_cm(1,2)+ test_cm(2,1)) / sum(sum(test_cm))
 %-------------------------LDA Graph-------------------------%
 
 figure()
+set(gcf,'color','w');
 title("Fisher's LDA");
 hold on
 boundary_line = fimplicit(disc_bound_graph, [min(X(:,1)) max(X(:,1)) min(X(:,2)) max(X(:,2))]);
 %gscatter(X(:,1), X(:,2), A,'rc', '..');
 
-gscatter(X((A==FLDA_training_predicted_vals),1),...
-    X((A==FLDA_training_predicted_vals),2),...
-    A(A==FLDA_training_predicted_vals),'rb', '.X');
+gscatter(X(:,1),...
+    X(:,2),...
+    FLDA_training_predicted_vals,'rb', '.x', [5 5]);
 
 scatter(X((A~=FLDA_training_predicted_vals),1),...
-    X((A~=FLDA_training_predicted_vals),2), 'k.');
+    X((A~=FLDA_training_predicted_vals),2), 20, 'ko');
 
 plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
 plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
-legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+lgd = legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
     'Meeting/Computer Centroid', 'Walking Centroid');
+set(lgd,'FontSize',10);
 hold off
 legend('show')
 xlabel('Acceleration-Z');
 ylabel('Gyroscope-X');
 
+%{
 figure()
 title("Fisher's LDA Predicted");
 hold on
@@ -112,7 +115,7 @@ hold off
 legend('show')
 xlabel('Acceleration-Z');
 ylabel('Gyroscope-X');
-
+%}
 %-------------------------Projection Graph-------------------------%
 
 figure()
@@ -140,22 +143,24 @@ legend('Meeting/Computer', 'Walking');
 %-------------------------TEST DATA-----------------------------%
 
 figure()
+set(gcf,'color','w');
 title("Test Data Fisher's LDA");
 hold on
 boundary_line = fimplicit(disc_bound_graph,...
     [min(test_X(:,1)) max(test_X(:,1)) min(test_X(:,2)) max(test_X(:,2))]);
 
-gscatter(test_X((test_A==FLDA_test_predicted_vals),1),...
-    test_X((test_A==FLDA_test_predicted_vals),2),...
-    test_A(test_A==FLDA_test_predicted_vals),'rc', '..');
+gscatter(test_X(:,1),...
+    test_X(:,2),...
+    FLDA_test_predicted_vals,'rb', '.x', [5 5]);
 
 scatter(test_X((test_A~=FLDA_test_predicted_vals),1),...
-    test_X((test_A~=FLDA_test_predicted_vals),2), 'k.');
+    test_X((test_A~=FLDA_test_predicted_vals),2), 20, 'ko');
 
 plot(Mu1(1), Mu1(2), 'b+', 'MarkerSize', 10, 'LineWidth', 2);
 plot(Mu2(1), Mu2(2), 'm+', 'MarkerSize', 10, 'LineWidth', 2);
-legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
+lgd_2 = legend('Decision Boundary', 'Meeting/Computer', 'Walking', 'Misclassified',...
     'Meeting/Computer Centroid', 'Walking Centroid');
+set(lgd_2,'FontSize',10);
 hold off
 legend('show')
 xlabel('Rho for Acceleration(Z)/Gyroscopic(X) points');
